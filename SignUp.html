@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - San Antonio Youth Organization</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Registration Form Section -->
+  <main>
+    <div class="form-container">
+      <h2>Sign Up</h2>
+
+      <!-- Success/Error message -->
+      <div id="feedback" class="feedback"></div>
+
+      <form id="signupForm">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required placeholder="Enter your full name">
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="Enter your email">
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required minlength="6" placeholder="Enter your password">
+        </div>
+        
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirm-password" name="confirm-password" required minlength="6" placeholder="Confirm your password">
+        </div>
+        
+        <button type="submit" class="auth-button">Create Account</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Firebase Scripts with ES Modules -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDuoMuK0kADUJ-fv9XPyyEn3tWMPDZD_Ts",
+      authDomain: "sayo-registration.firebaseapp.com",
+      projectId: "sayo-registration",
+      storageBucket: "sayo-registration.appspot.com",
+      messagingSenderId: "270038403017",
+      appId: "1:270038403017:web:73c1e78ad17dc49e1d4a18",
+      measurementId: "G-H1L2YMBZJT"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Handle form submission
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const feedback = document.getElementById('feedback');
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+
+      feedback.classList.remove('success');
+      feedback.style.color = '';
+      feedback.textContent = '';
+
+      if (password !== confirmPassword) {
+        feedback.textContent = '❌ Passwords do not match!';
+        return;
+      }
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          return updateProfile(user, { displayName: name });
+        })
+        .then(() => {
+          feedback.textContent = '✅ Registration successful! Redirecting to sign in...';
+          feedback.classList.add('success');
+          setTimeout(() => {
+            window.location.href = 'signin.html';
+          }, 2000);
+        })
+        .catch((error) => {
+          feedback.textContent = '❌ ' + error.message;
+          console.error("Signup Error:", error);
+        });
+    });
+  </script>
+
+</body>
+</html>

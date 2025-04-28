@@ -1,0 +1,118 @@
+/* Reset default styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styling with background image */
+body {
+  font-family: Arial, sans-serif;
+  background-image: url('dan.jpg'); /* Replace with your image URL */
+  background-size: cover; /* Ensure the image covers the entire body */
+  background-position: center; /* Center the image */
+  background-attachment: fixed; /* Keeps the background fixed when scrolling */
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  padding: 20px; /* Adds space around the form */
+}
+
+/* Header styling */
+header {
+  background-color: rgba(0, 123, 255, 0.7); /* Semi-transparent blue background */
+  color: white;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+h1 {
+  font-size: 2.5em;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+/* Main section styling */
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+/* Form container styles */
+.form-container {
+  background-color: rgba(255, 255, 255, 0.8); /* White with slight transparency */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px; /* Limit form width */
+  margin-bottom: 20px;
+}
+
+/* Content containers (Announcement, Events/Activity, Rules) */
+.content-container {
+  background-color: rgba(0, 255, 255, 0.9);
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 700px;
+  cursor: pointer; /* Make the section appear clickable */
+  transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+.content-container:hover {
+  transform: scale(1.05); /* Slightly enlarge the container when hovered */
+}
+
+.content-container h3 {
+  font-size: 1.8em;
+  margin-bottom: 15px;
+}
+
+.content-container p {
+  font-size: 1.1em;
+  line-height: 1.5;
+}
+
+/* Logout button styling */
+#logoutBtn {
+  position: fixed;
+  top: 20px;  /* Adjust distance from the top */
+  right: 20px;  /* Adjust distance from the right */
+  padding: 10px 20px;
+  background-color: #FF5733; /* Customize your button color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#logoutBtn:hover {
+  background-color: #C94C1F;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .form-container {
+    max-width: 90%; /* Make the form take up most of the screen on small devices */
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2em; /* Smaller header on mobile */
+  }
+}

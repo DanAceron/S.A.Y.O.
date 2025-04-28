@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - San Antonio Youth Organization</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Link to your external CSS -->
+</head>
+<body>
+
+  <!-- Header with the "Welcome S.A.Y.O" message -->
+  <header>
+    <h1>Welcome to S.A.Y.O</h1>
+  </header>
+
+  <!-- Main content -->
+  <main>
+  
+   <!-- Clickable Announcement Section -->
+    <div class="content-container" id="announcement" onclick="displayContent('announcement')">
+      <h3>ANNOUNCEMENT</h3>
+      <p>This is where your latest announcements will be displayed. Stay tuned!</p>
+      <div id="announcementDetails" class="details" style="display:none;">
+        <p><strong>Meeting Day:</strong> Monday</p>
+        <p><strong>Time:</strong> 6:00 PM</p>
+        <p><strong>Location:</strong> Community Center</p>
+      </div>
+    </div>
+
+    <!-- Clickable Events/Activities Section -->
+    <div class="content-container" id="events" onclick="displayContent('events')">
+      <h3>EVENTS/ACTIVITY</h3>
+      <p>Check out the upcoming events and activities organized by S.A.Y.O. Don't miss out!</p>
+      <div id="eventsDetails" class="details" style="display:none;">
+        <p><strong>Upcoming Event:</strong> Youth Talent Show</p>
+        <p><strong>Date:</strong> Friday, 3rd May</p>
+        <p><strong>Time:</strong> 5:00 PM</p>
+        <p><strong>Location:</strong> S.A.Y.O. Hall</p>
+      </div>
+    </div>
+
+    <!-- Clickable Rules Section -->
+    <div class="content-container" id="rules" onclick="displayContent('rules')">
+      <h3>RULES</h3>
+      <p>Make sure to follow the rules and guidelines to have a safe and enjoyable experience at S.A.Y.O.</p>
+      <div id="rulesDetails" class="details" style="display:none;">
+        <ul>
+          <li>No bullying or harassment.</li>
+          <li>Respect each other's space and belongings.</li>
+          <li>Attend meetings on time.</li>
+          <li>Follow the instructions from the organizers.</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <!-- Logout Button -->
+  <button id="logoutBtn">Log Out</button>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+  <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDuoMuK0kADUJ-fv9XPyyEn3tWMPDZD_Ts",
+      authDomain: "sayo-registration.firebaseapp.com",
+      projectId: "sayo-registration",
+      storageBucket: "sayo-registration.appspot.com",
+      messagingSenderId: "270038403017",
+      appId: "1:270038403017:web:73c1e78ad17dc49e1d4a18",
+      measurementId: "G-H1L2YMBZJT"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Listen for auth state changes
+    auth.onAuthStateChanged(user => {
+      const welcomeMessage = document.getElementById('welcomeMessage');
+
+      if (user) {
+        // Set the user's name or email in the welcome message
+        const name = user.displayName || user.email.split('@')[0];
+        welcomeMessage.textContent = `Hello, ${name}! 👋`;
+      } else {
+        // If no user is logged in, redirect to the login page
+        window.location.href = 'signin.html';
+      }
+    });
+
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      auth.signOut().then(() => {
+        window.location.href = 'signin.html';
+      });
+    });
+
+    // Function to display content when a section is clicked
+    function displayContent(section) {
+      const announcementDetails = document.getElementById('announcementDetails');
+      const eventsDetails = document.getElementById('eventsDetails');
+      const rulesDetails = document.getElementById('rulesDetails');
+
+      // Hide all details sections first
+      announcementDetails.style.display = 'none';
+      eventsDetails.style.display = 'none';
+      rulesDetails.style.display = 'none';
+
+      // Show the clicked section's details
+      if (section === 'announcement') {
+        announcementDetails.style.display = 'block';
+      } else if (section === 'events') {
+        eventsDetails.style.display = 'block';
+      } else if (section === 'rules') {
+        rulesDetails.style.display = 'block';
+      }
+    }
+  </script>
+
+</body>
+</html>
